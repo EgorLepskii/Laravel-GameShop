@@ -1,0 +1,28 @@
+version: '3.8'
+
+
+services:
+    database:
+        image: mysql
+        container_name: gameshop-database
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: qUgr7YKwzPaokcQ1vxYO8ToU0Kg
+            MYSQL_DATABASE: gameShop
+
+        ports:
+            - '3301:3306'
+    php-gameshop:
+        container_name: gameShop
+        build:
+            context: .
+        ports:
+            - '8085:80'
+        volumes:
+            - .:/var/www
+            - ./apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+            - ./dockerfiles/app/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        environment:
+            XDEBUG_CONFIG: 'discover_client_host=true client_host=172.17.0.1 log_level=0'
+        depends_on:
+            - database

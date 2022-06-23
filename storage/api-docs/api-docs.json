@@ -1,0 +1,161 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Books API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8085",
+            "description": "Docker container"
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Login user",
+                "operationId": "8cb7742ae98d0990acb2907c4e00bf24",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful login"
+                    },
+                    "422": {
+                        "description": "Incorrect input data"
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Register user",
+                "operationId": "ed42f392010c301892e640067141676e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User register success"
+                    },
+                    "400": {
+                        "description": "Incorrect input data"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User logout",
+                "operationId": "0d29c740dc06d77602af8095bf4654cc",
+                "responses": {
+                    "200": {
+                        "description": "User succesfully signed out"
+                    },
+                    "401": {
+                        "description": "User already unauthorized"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthLoginRequest": {
+                "description": "Auth request",
+                "properties": {
+                    "name": {
+                        "title": "Email",
+                        "description": "User account name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "TEST_NAME"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User account email",
+                        "type": "string",
+                        "format": "string",
+                        "example": "test@mail.ru"
+                    },
+                    "password": {
+                        "title": "Email",
+                        "description": "User account password",
+                        "type": "string",
+                        "format": "string",
+                        "example": "CkwCz3xK"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthRegisterRequest": {
+                "description": "Auth request",
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "User account name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "TEST_NAME"
+                    },
+                    "email": {
+                        "title": "Email",
+                        "description": "User account email",
+                        "type": "string",
+                        "format": "string",
+                        "example": "test@mail.ru"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "User account password",
+                        "type": "string",
+                        "format": "string",
+                        "example": "CkwCz3xK"
+                    },
+                    "password_confirmation": {
+                        "title": "password confirmation",
+                        "description": "User account password confirmation",
+                        "type": "string",
+                        "format": "string",
+                        "example": "CkwCz3xK"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "JWT_token",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
