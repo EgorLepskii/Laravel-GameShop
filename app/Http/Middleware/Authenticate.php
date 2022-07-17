@@ -26,7 +26,6 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response
     {
-        dd($next);
         if ($this->guard->user()) {
             return $next($request);
         }
